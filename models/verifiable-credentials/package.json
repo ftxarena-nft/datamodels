@@ -1,7 +1,7 @@
 {
   "name": "@datamodels/verifiable-credentials",
   "version": "0.1.0",
-  "author": "Krebit.id",
+  "author": "Krebit",
   "license": "(Apache-2.0 OR MIT)",
   "homepage": "https://github.com/ceramicstudio/datamodels#readme",
   "keywords": [
@@ -12,13 +12,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ceramicstudio/datamodels",
-    "directory": "models/verifiable-credentials"
+    "directory": "packages/verifiable-credentials"
   },
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/model.cjs",
+  "module": "dist/model.mjs",
+  "typings": "dist/model.d.ts",
   "exports": {
-    ".": "./dist/index.js"
+    "import": "./dist/model.mjs",
+    "require": "./dist/model.cjs",
+    "default": "./dist/model.cjs"
   },
   "files": [
     "dist",
@@ -26,20 +28,16 @@
     "types"
   ],
   "engines": {
-    "node": ">=14.14"
+    "node": ">=14"
   },
-  "sideEffects": false,
   "scripts": {
     "types": "del types && json2ts -i schemas -o types",
-    "build:clean": "del dist",
-    "build:js": "swc src -d ./dist --config-file ../../.swcrc",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build": "yarn build:clean && yarn build:types && yarn build:js",
+    "build": "del dist && tsc && swc src -o ./dist/model.mjs --config-file ../../swc.esm.json && swc src -o ./dist/model.cjs --config-file ../../swc.cjs.json",
     "lint": "eslint --fix",
     "prepare": "yarn build",
     "prepublishOnly": "package-check"
   },
   "dependencies": {
-    "@glazed/types": "^0.2.0"
+    "@glazed/types": "^0.1.3"
   }
 }
